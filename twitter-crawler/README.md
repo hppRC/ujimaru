@@ -1,4 +1,4 @@
-# Ujimaru Twitter Client
+# Ujimaru Twitter Crawler
 
-Twitter Client written in Go
+Twitter Crawler written in Go
 

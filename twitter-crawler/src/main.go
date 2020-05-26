@@ -2,21 +2,48 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"log"
+	"net/url"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/kelseyhightower/envconfig"
 )
 
-type Specification struct {
+type specification struct {
 	APIKey            string `envconfig:"API_KEY"`
 	APISecretKey      string `envconfig:"API_SECRET_KEY"`
 	AccesssToken      string `envconfig:"ACCESS_TOKEN"`
 	AccessTokenSecret string `envconfig:"ACCESS_TOKEN_SECRET"`
 }
 
+var rep *regexp.Regexp = regexp.MustCompile("(@[A-Za-z0-9_]+\\s)|(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)|(`[\\s\\S]*?`)|(\n|\r\n|\r)")
+
+func deleteAutomaticTweet(text string) string {
+	if strings.HasSuffix(text, "#contributter_report") ||
+		strings.HasPrefix(text, "Liked on YouTube:") ||
+		strings.Contains(text, "のポスト数") {
+		text = ""
+	}
+
+	return text
+}
+
+func cleansingTweet(text string) string {
+	text = deleteAutomaticTweet(text)
+	text = rep.ReplaceAllString(text, "")
+	text = html.UnescapeString(text)
+	text = strings.TrimSpace(text)
+	return text
+}
+
 func main() {
-	var s Specification
+	var s specification
 	err := envconfig.Process("", &s)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -30,8 +57,44 @@ func main() {
 	//  := anaconda.NewTwitterApiWithCredentials("your-access-token", "your-access-token-secret", "your-consumer-key", "your-consumer-secret")
 	api := anaconda.NewTwitterApiWithCredentials(s.AccesssToken, s.AccessTokenSecret, s.APIKey, s.APISecretKey)
 
-	searchResult, _ := api.GetSearch("にじさんじ", nil)
-	for _, tweet := range searchResult.Statuses {
-		api.Favorite(tweet.Id)
+	var (
+		timeline []anaconda.Tweet
+		query    url.Values
+		maxID    string
+	)
+
+	//os.O_RDWRを渡しているので、同時に読み込みも可能
+	file, err := os.OpenFile("tweets.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	for {
+		// get tweet id older than last tweet
+		if len(timeline) != 0 {
+			maxID = strconv.FormatInt(timeline[len(timeline)-1].Id-1, 10)
+		}
+		query = url.Values{
+			"screen_name": []string{"uzimaru0000"},
+			"include_rts": []string{"false"},
+		}
+		if maxID != "" {
+			query.Add("max_id", maxID)
+		}
+
+		timeline, _ = api.GetUserTimeline(query)
+		if len(timeline) == 0 {
+			break
+		}
+
+		for _, tweet := range timeline {
+			text := cleansingTweet(tweet.FullText)
+			if text != "" {
+				fmt.Fprintln(file, text)
+			}
+			fmt.Println(text)
+		}
+		time.Sleep(time.Second * 3)
 	}
 }

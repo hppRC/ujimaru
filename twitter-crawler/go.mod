@@ -1,4 +1,4 @@
-module ujimaru-twitter-client
+module ujimaru-twitter-crawler
 
 go 1.14
 
@@ -11,5 +11,4 @@ require (
 	github.com/garyburd/go-oauth v0.0.0-20180319155456-bca2e7f09a17 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
 	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2 // indirect
-	rsc.io/quote v1.5.2
 )

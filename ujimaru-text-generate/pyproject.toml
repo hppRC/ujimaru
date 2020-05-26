@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "ujimaru-text-generate"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["hppRC <hpp.ricecake@gmail.com>"]
+readme = "README.rst"
+repository = "https://github.com/hppRC/ujimaru"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -13,3 +13,4 @@ def get(country: str) -> str:
 def main() -> None:
     country = sys.argv[1] if len(sys.argv) > 1 else ""
     print(get(country))
+

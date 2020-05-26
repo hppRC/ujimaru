@@ -9,6 +9,14 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+gin = "^0.1.6"
+jax = "^0.1.68"
+trax = "^1.2.4"
+numpy = "^1.18.4"
+scipy = "^1.4.1"
+sentencepiece = "^0.1.91"
+tensorflow = "^2.2.0"
+matplotlib = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

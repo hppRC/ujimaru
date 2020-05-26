@@ -1152,7 +1152,7 @@ description = "Trax"
 name = "trax"
 optional = false
 python-versions = "*"
-version = "1.2.4"
+version = "1.2.0"
 
 [package.dependencies]
 absl-py = "*"
@@ -1233,7 +1233,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "b175e1891264b3a8619e9164fd8ae25353ce03c4abe76a7c70194fe531fac2d1"
+content-hash = "cea28093df5e7e930a824e56b0326f76bd3163686ebec290ba5c057551971e85"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1906,8 +1906,8 @@ tqdm = [
     {file = "tqdm-4.46.0.tar.gz", hash = "sha256:4733c4a10d0f2a4d098d801464bdaf5240c7dadd2a7fde4ee93b0a0efd9fb25e"},
 ]
 trax = [
-    {file = "trax-1.2.4-py2.py3-none-any.whl", hash = "sha256:d4531a3a04009480e9c9696a8d417246b4a68a28ff561f627ca4fa7e73257ab5"},
-    {file = "trax-1.2.4.tar.gz", hash = "sha256:f911b2d40165779176cc47061b544d0bd947d07de6bb618d92c9ac37f4fbdd10"},
+    {file = "trax-1.2.0-py2.py3-none-any.whl", hash = "sha256:a27b88244cc79b35f53969a907bdded51cf90802f8537b8552535da76a944cf5"},
+    {file = "trax-1.2.0.tar.gz", hash = "sha256:97443fc175d1974f00ebff77edfb156b6f19ecc3770c78e644781a4e88f954fa"},
 ]
 uritemplate = [
     {file = "uritemplate-3.0.1-py2.py3-none-any.whl", hash = "sha256:07620c3f3f8eed1f12600845892b0e036a2420acf513c53f7de0abd911a5894f"},

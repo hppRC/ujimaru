@@ -17,6 +17,7 @@ scipy = "^1.4.1"
 sentencepiece = "^0.1.91"
 tensorflow = "^2.2.0"
 matplotlib = "^3.2.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

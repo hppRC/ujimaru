@@ -63,38 +63,43 @@ func main() {
 		maxID    string
 	)
 
-	//os.O_RDWRを渡しているので、同時に読み込みも可能
-	file, err := os.OpenFile("tweets.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+	userNames := []string{"uzimaru0000", "p1ass", "hpp_ricecake", "yt8492", "tanakahiko", "nasa_desu", "saitoeku3", "d0ra1998"}
 
-	for {
-		// get tweet id older than last tweet
-		if len(timeline) != 0 {
-			maxID = strconv.FormatInt(timeline[len(timeline)-1].Id-1, 10)
-		}
-		query = url.Values{
-			"screen_name": []string{"uzimaru0000"},
-			"include_rts": []string{"false"},
-		}
-		if maxID != "" {
-			query.Add("max_id", maxID)
-		}
+	for _, userName := range userNames {
 
-		timeline, _ = api.GetUserTimeline(query)
-		if len(timeline) == 0 {
-			break
+		//os.O_RDWRを渡しているので、同時に読み込みも可能
+		file, err := os.OpenFile("tweets-"+userName+".txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatal(err)
 		}
+		defer file.Close()
 
-		for _, tweet := range timeline {
-			text := cleansingTweet(tweet.FullText)
-			if text != "" {
-				fmt.Fprintln(file, text)
+		for {
+			// get tweet id older than last tweet
+			if len(timeline) != 0 {
+				maxID = strconv.FormatInt(timeline[len(timeline)-1].Id-1, 10)
 			}
-			fmt.Println(text)
+			query = url.Values{
+				"screen_name": []string{userName},
+				"include_rts": []string{"false"},
+			}
+			if maxID != "" {
+				query.Add("max_id", maxID)
+			}
+
+			timeline, _ = api.GetUserTimeline(query)
+			if len(timeline) == 0 {
+				break
+			}
+
+			for _, tweet := range timeline {
+				text := cleansingTweet(tweet.FullText)
+				if text != "" {
+					fmt.Fprintln(file, text)
+				}
+				fmt.Println(text)
+			}
+			time.Sleep(time.Second * 3)
 		}
-		time.Sleep(time.Second * 3)
 	}
 }

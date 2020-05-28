@@ -1,25 +1,5 @@
-from pyknp import Juman
 import markovify
-import MeCab
-from pyknp import Juman
-
-
-jumanpp = Juman()
-
-
-def wakati(sentence: str) -> str:
-    return " ".join(token.midasi for token in jumanpp.analysis(sentence.strip()))
-
-
-def parse_text(filepath):
-    with open(filepath) as f:
-        corpus = f.readlines()
-
-    return "\n".join(wakati(line) for line in corpus)
-
-
-def build_model(parsed_text, state_size=2):
-    return markovify.NewlineText(parsed_text, state_size)
+import json
 
 
 def clean_text(sentence: str) -> str:
@@ -30,19 +10,17 @@ def clean_text(sentence: str) -> str:
         return ""
 
 
-filepath = "ujimaru_markov_model/tweets-uzimaru0000.txt"
+models = []
 
-parsed_text = parse_text(filepath)
+for name in ["ujimaru_markov_model/trimodel.json", "ujimaru_markov_model/hpp-trimodel.json", "ujimaru_markov_model/nasa-trimodel.json"]:
+    with open(name) as f:
+        model_json = json.load(f)
+    models.append(markovify.Text.from_json(model_json))
 
-model = build_model(parsed_text, state_size=2)
+model = markovify.combine(models, [1, 1, 1])
 
-
-with open("ujimaru_markov_model/generated.txt", "w") as f:
-    for _ in range(100):
+with open("ujimaru_markov_model/tri-generated-some.txt", "w") as f:
+    for _ in range(200):
         sentence = clean_text(model.make_sentence())
-        print(sentence, end="")
-        f.write(sentence)
-    for _ in range(100):
-        sentence = clean_text(model.make_sentence_with_start("えっち"))
         print(sentence, end="")
         f.write(sentence)

@@ -2,12 +2,12 @@
 import sentencepiece as spm
 from bs4 import BeautifulSoup
 
-with open("ujimaru_text_generate/sentencepiece/tweets-uzimaru0000.txt") as f:
+with open("ujimaru_text_generate/sentencepiece/uzimaru0000.txt") as f:
     corpus = [s.strip() for s in f.readlines()]
 
 # %%
 spm.SentencePieceTrainer.Train(
-    '--input=ujimaru_text_generate/sentencepiece/tweets-uzimaru0000.txt, --model_prefix=ujimaru_text_generate/sentencepiece/uzimaru0000 --character_coverage=0.9995 --vocab_size=7000 --pad_id=3'
+    '--input=ujimaru_text_generate/sentencepiece/uzimaru0000.txt, --model_prefix=ujimaru_text_generate/sentencepiece/uzimaru0000 --character_coverage=0.9995 --vocab_size=7000 --pad_id=3'
 )
 
 # %%

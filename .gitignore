@@ -1,3 +1,4 @@
 .envrc
 .env
-twitter-scraper
+*.txt
+*.json

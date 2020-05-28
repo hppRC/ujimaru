@@ -7,10 +7,11 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
-	"github.com/hpprc/anaconda"
+	"github.com/ChimeraCoder/anaconda"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -21,12 +22,17 @@ type specification struct {
 	AccessTokenSecret string `envconfig:"ACCESS_TOKEN_SECRET"`
 }
 
-var rep *regexp.Regexp = regexp.MustCompile("(@[A-Za-z0-9_]+\\s)|(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)|(`[\\s\\S]*?`)|(\n|\r\n|\r)")
+var rep *regexp.Regexp = regexp.MustCompile("(@[A-Za-z0-9_]+)|(https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+)|(`[\\s\\S]*?`)|(\n|\r\n|\r)")
 
 func deleteAutomaticTweet(text string) string {
-	if strings.HasSuffix(text, "#contributter_report") ||
-		strings.HasPrefix(text, "Liked on YouTube:") ||
-		strings.Contains(text, "のポスト数") {
+	if strings.Contains(text, "#contributter_report") ||
+		strings.Contains(text, "#contributter") ||
+		strings.Contains(text, "Liked on YouTube:") ||
+		strings.Contains(text, "のポスト数") ||
+		strings.Contains(text, "ポストに到達") ||
+		strings.Contains(text, "RT @") ||
+		strings.Contains(text, "#LAPRASポートフォリオ") ||
+		strings.Contains(text, "#pixiv") {
 		text = ""
 	}
 
@@ -57,61 +63,65 @@ func main() {
 	api := anaconda.NewTwitterApiWithCredentials(s.AccesssToken, s.AccessTokenSecret, s.APIKey, s.APISecretKey)
 
 	var (
-		res anaconda.SearchFullArchiveResponse
+		timeline []anaconda.Tweet
+		query    url.Values
+		maxID    string
 	)
 
-	//os.O_RDWRを渡しているので、同時に読み込みも可能
-	file, err := os.OpenFile("tweets-extra-7.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	// fullArchiveAPIUrl := "https://api.twitter.com/1.1/tweets/search/fullarchive/ujimaru.json"
-	query := "from:uzimaru0000"
-	date := "202005170000"
-	params := url.Values{
-		"toDate": []string{date},
+	userNames := []string{
+		// "uzimaru0000",
+		// "p1ass",
+		// "hpp_ricecake",
+		// "yt8492",
+		// "takanakahiko",
+		// "nasa_desu",
+		// "saitoeku3",
+		"d0ra1998",
+		// "schktjm",
 	}
 
-	// fmt.Println(api.GetSearch("にじさんじ", nil))
-	res, _ = api.GetSearchFrom30dayArchive(query, params, "ujimaru")
-	fmt.Println("Next: ", res.Next)
-	fmt.Println("Parameters: ", res.RequestParameters)
-	fmt.Println("FromDate: ", res.RequestParameters.FromDate)
-	fmt.Println("ToDate: ", res.RequestParameters.ToDate)
-	fmt.Println("MaxResults: ", res.RequestParameters.MaxResults)
-	for _, tweet := range res.Results {
-		text := cleansingTweet(tweet.FullText)
-		if text != "" {
-			fmt.Fprintln(file, text)
-		}
-		fmt.Println(text)
-		fmt.Println(tweet.CreatedAtTime())
-	}
+	self, _ := api.GetSelf(query)
+	fmt.Println("me", self.Name)
+
 	time.Sleep(time.Second * 3)
 
-	for i := 0; i < 100; i++ {
-		params = url.Values{
-			"toDate": []string{date},
-			"next":   []string{res.Next},
-		}
-
-		res, _ = api.GetSearchFrom30dayArchive(query, params, "ujimaru")
-		if len(res.Results) == 0 {
-			break
-		}
-
-		for _, tweet := range res.Results {
-			text := cleansingTweet(tweet.FullText)
-			if text != "" {
-				fmt.Fprintln(file, text)
-			}
-			fmt.Println(text)
-			fmt.Println(tweet.CreatedAtTime())
-		}
-
+	for _, userName := range userNames {
+		maxID = ""
+		fmt.Println("start:", userName)
 		time.Sleep(time.Second * 3)
-	}
+		//os.O_RDWRを渡しているので、同時に読み込みも可能
+		file, err := os.OpenFile("tweets-"+userName+".txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
 
+		for {
+			// get tweet id older than last tweet
+			if len(timeline) != 0 {
+				maxID = strconv.FormatInt(timeline[len(timeline)-1].Id-1, 10)
+			}
+			query = url.Values{
+				"screen_name": []string{userName},
+				"include_rts": []string{"false"},
+			}
+			if maxID != "" {
+				query.Add("max_id", maxID)
+			}
+
+			timeline, _ = api.GetUserTimeline(query)
+			if len(timeline) == 0 {
+				break
+			}
+
+			for _, tweet := range timeline {
+				text := cleansingTweet(tweet.FullText)
+				if text != "" {
+					fmt.Fprintln(file, text)
+				}
+				fmt.Println(text)
+			}
+			time.Sleep(time.Second * 3)
+		}
+	}
 }

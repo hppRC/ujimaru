@@ -7,11 +7,10 @@ import (
 	"net/url"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 	"time"
 
-	"github.com/ChimeraCoder/anaconda"
+	"github.com/hpprc/anaconda"
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -58,48 +57,61 @@ func main() {
 	api := anaconda.NewTwitterApiWithCredentials(s.AccesssToken, s.AccessTokenSecret, s.APIKey, s.APISecretKey)
 
 	var (
-		timeline []anaconda.Tweet
-		query    url.Values
-		maxID    string
+		res anaconda.SearchFullArchiveResponse
 	)
 
-	userNames := []string{"uzimaru0000", "p1ass", "hpp_ricecake", "yt8492", "tanakahiko", "nasa_desu", "saitoeku3", "d0ra1998"}
-
-	for _, userName := range userNames {
-
-		//os.O_RDWRを渡しているので、同時に読み込みも可能
-		file, err := os.OpenFile("tweets-"+userName+".txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		for {
-			// get tweet id older than last tweet
-			if len(timeline) != 0 {
-				maxID = strconv.FormatInt(timeline[len(timeline)-1].Id-1, 10)
-			}
-			query = url.Values{
-				"screen_name": []string{userName},
-				"include_rts": []string{"false"},
-			}
-			if maxID != "" {
-				query.Add("max_id", maxID)
-			}
-
-			timeline, _ = api.GetUserTimeline(query)
-			if len(timeline) == 0 {
-				break
-			}
-
-			for _, tweet := range timeline {
-				text := cleansingTweet(tweet.FullText)
-				if text != "" {
-					fmt.Fprintln(file, text)
-				}
-				fmt.Println(text)
-			}
-			time.Sleep(time.Second * 3)
-		}
+	//os.O_RDWRを渡しているので、同時に読み込みも可能
+	file, err := os.OpenFile("tweets-extra-7.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer file.Close()
+
+	// fullArchiveAPIUrl := "https://api.twitter.com/1.1/tweets/search/fullarchive/ujimaru.json"
+	query := "from:uzimaru0000"
+	date := "202005170000"
+	params := url.Values{
+		"toDate": []string{date},
+	}
+
+	// fmt.Println(api.GetSearch("にじさんじ", nil))
+	res, _ = api.GetSearchFrom30dayArchive(query, params, "ujimaru")
+	fmt.Println("Next: ", res.Next)
+	fmt.Println("Parameters: ", res.RequestParameters)
+	fmt.Println("FromDate: ", res.RequestParameters.FromDate)
+	fmt.Println("ToDate: ", res.RequestParameters.ToDate)
+	fmt.Println("MaxResults: ", res.RequestParameters.MaxResults)
+	for _, tweet := range res.Results {
+		text := cleansingTweet(tweet.FullText)
+		if text != "" {
+			fmt.Fprintln(file, text)
+		}
+		fmt.Println(text)
+		fmt.Println(tweet.CreatedAtTime())
+	}
+	time.Sleep(time.Second * 3)
+
+	for i := 0; i < 100; i++ {
+		params = url.Values{
+			"toDate": []string{date},
+			"next":   []string{res.Next},
+		}
+
+		res, _ = api.GetSearchFrom30dayArchive(query, params, "ujimaru")
+		if len(res.Results) == 0 {
+			break
+		}
+
+		for _, tweet := range res.Results {
+			text := cleansingTweet(tweet.FullText)
+			if text != "" {
+				fmt.Fprintln(file, text)
+			}
+			fmt.Println(text)
+			fmt.Println(tweet.CreatedAtTime())
+		}
+
+		time.Sleep(time.Second * 3)
+	}
+
 }

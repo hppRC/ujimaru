@@ -26,10 +26,11 @@ def build_model(parsed_text, state_size=2):
     return markovify.NewlineText(parsed_text, state_size)
 
 
-filepath = "../shared/tweets-hpp_ricecake.txt"
+filepath = "../shared/uzimaru0000.txt"
 
 parsed_text = parse_text(filepath)
 
 model = build_model(parsed_text, state_size=3)
-with open("ujimaru_markov_model/hpp-trimodel.json", "w") as f:
+
+with open("models/trimodel-uzimaru0000-big.json", "w") as f:
     json.dump(model.to_json(), f)

@@ -69,15 +69,15 @@ func main() {
 	)
 
 	userNames := []string{
-		// "uzimaru0000",
-		// "p1ass",
-		// "hpp_ricecake",
-		// "yt8492",
-		// "takanakahiko",
-		// "nasa_desu",
-		// "saitoeku3",
+		"uzimaru0000",
+		"p1ass",
+		"hpp_ricecake",
+		"yt8492",
+		"takanakahiko",
+		"nasa_desu",
+		"saitoeku3",
 		"d0ra1998",
-		// "schktjm",
+		"schktjm",
 	}
 
 	self, _ := api.GetSelf(query)

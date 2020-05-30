@@ -2,3 +2,4 @@
 .env
 *.txt
 *.json
+.vscode

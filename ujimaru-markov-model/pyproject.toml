@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ujimaru-markov-model"
-version = "0.2.0"
+version = "0.2.1"
 description = ""
 authors = ["hppRC <hpp.ricecake@gmail.com>"]
 include = ["ujimaru_markov_model/data/ujimaru.json"]

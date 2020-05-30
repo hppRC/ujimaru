@@ -4,7 +4,7 @@ import json
 
 class Ujimaru(object):
     def __init__(self):
-        with open("ujimaru_markov_model/ujimaru.json") as f:
+        with open("ujimaru.json") as f:
             big_model_json = json.load(f)
         self.model = markovify.Text.from_json(big_model_json)
 

@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "ujimaru-markov-model"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["hppRC <hpp.ricecake@gmail.com>"]
+include = ["ujimaru_markov_model/ujimaru.json"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

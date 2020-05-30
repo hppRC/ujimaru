@@ -139,6 +139,17 @@ version = "1.15.0"
 
 [[package]]
 category = "main"
+description = ""
+name = "ujimaru-markov-model"
+optional = false
+python-versions = ">=3.8,<4.0"
+version = "0.1.0"
+
+[package.dependencies]
+markovify = ">=0.8.0,<0.9.0"
+
+[[package]]
+category = "main"
 description = "ASCII transliterations of Unicode text"
 name = "unidecode"
 optional = false
@@ -154,7 +165,7 @@ python-versions = "*"
 version = "0.1.9"
 
 [metadata]
-content-hash = "8ea7e85543482e30dfe0d5a5a54e078fb92dfafb38f28c76b4b2814823f1013e"
+content-hash = "565392d089709ec7936f2a7bd8844d30ff751e0506046ef6781be3646bacfe57"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -235,6 +246,10 @@ pytest = [
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
     {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+]
+ujimaru-markov-model = [
+    {file = "ujimaru-markov-model-0.1.0.tar.gz", hash = "sha256:8865c126c8f58b995b9d77f4089f22750f593dc3de9c210dd5fa7541ba81ac95"},
+    {file = "ujimaru_markov_model-0.1.0-py3-none-any.whl", hash = "sha256:5295f702bab515973f2b161fc17fb210cde8274184ecbeb3b2615eb222c9bd9b"},
 ]
 unidecode = [
     {file = "Unidecode-1.1.1-py2.py3-none-any.whl", hash = "sha256:1d7a042116536098d05d599ef2b8616759f02985c85b4fef50c78a5aaf10822a"},

@@ -6,6 +6,7 @@ Reformerによるツイートの模倣・生成
 
 ## 結果
 
+しょっぺぇ
 
 ### 3000文6万文字を使用
 2000step(1.5h)程度でサチった、accuracyが41.5%より上がらなくなった
@@ -13,6 +14,10 @@ Reformerによるツイートの模倣・生成
 ### 8000文字18万文字を使用
 同様に2000step程度でサチる、accuracyが46.5%程度
 
+100万分程度あればまともな文が出てくる可能性
+
+
+## 実装、データ
 
 [Google Drive](https://drive.google.com/file/d/1-3DzppHf9vy_7NUepw-yv6qBlHjtxNkQ/view?usp=sharing)
 

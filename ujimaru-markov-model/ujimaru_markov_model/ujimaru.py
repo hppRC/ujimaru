@@ -1,10 +1,13 @@
 import markovify
 import json
+import os
 
 
 class Ujimaru(object):
     def __init__(self):
-        with open("ujimaru.json") as f:
+        this_dir, this_filename = os.path.split(__file__)
+        DATA_PATH = os.path.join(this_dir, "data", "ujimaru.json")
+        with open(DATA_PATH) as f:
             big_model_json = json.load(f)
         self.model = markovify.Text.from_json(big_model_json)
 

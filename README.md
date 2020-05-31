@@ -6,13 +6,13 @@ This project is a twitter bot like [@uzimaru0000](https://twitter.com/uzimaru000
 
 Twitter client implementations for [@ujimaru0000](https://twitter.com/ujimaru0000)
 
-Using [Kuon](https://github.com/hppRC/kuon)
+Written in Rust. (Using [Kuon](https://github.com/hppRC/kuon))
 
 ## Twitter crawler
 
 Twitter crawler for collect tweets of uzimaru and other users.
 
-Written in Go. (using [anaconda](https://github.com/ChimeraCoder/anaconda))
+Written in Go. (Using [anaconda](https://github.com/ChimeraCoder/anaconda))
 
 ## Ujimaru API
 
@@ -20,7 +20,7 @@ Text generation API for ujimaru.
 
 Written in Python. (Using [markovify](https://github.com/jsvine/markovify) and [ujimaru-markov-model](https://pypi.org/project/ujimaru-markov-model/))
 
-This is flask application, and deployed on Cloud Run.
+This is a flask application, and deployed on the Cloud Run.
 
 
 ## Ujimaru Markov Experiment
@@ -30,16 +30,29 @@ Implementations and experiments.
 
 ## Ujimaru Markov Model
 
-Easy ujimaru(uzimaru0000 like) text generator library.
+An easy ujimaru(uzimaru0000 like) text generator library.
 
 PyPI: [ujimaru-markov-model](https://pypi.org/project/ujimaru-markov-model/)
 
 This library generates text using a third-order Markov chain.
 
 
+### Usage
+
+```python
+# load model (model included).
+ujimaru = Ujimaru()
+
+print(ujimaru.make_sentence())
+# 京都行かない方が良さげかな...おらもポテチ食べたい...
+print(ujimaru.make_tweet()) # Generate a sentence of 140 characters or less
+# 検索しても無限にredux-thunkが出てきて「なっっっっつ」ってなったけど0.1.0のtagを打ったらちゃんとブランチ分けます
+```
+
+
 ## Ujimaru Text Generate
 
-Text generation program by [reformer](https://github.com/google/trax/tree/master/trax/models/reformer).
+A text generation program by [reformer](https://github.com/google/trax/tree/master/trax/models/reformer).
 
 - [https://ai-scholar.tech/articles/treatise/reformer-ai-364](https://ai-scholar.tech/articles/treatise/reformer-ai-364)
 - [Reformer: The Efficient Transformer](https://arxiv.org/abs/2001.04451)

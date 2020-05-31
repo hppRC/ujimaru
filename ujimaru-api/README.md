@@ -1,5 +1,12 @@
 # Ujimaru API
 
+## URL
+
+API endpoint for tweet.
+
+[https://ujimaru-api-l3qfihnisq-an.a.run.app/tweet](https://ujimaru-api-l3qfihnisq-an.a.run.app/tweet)
+
+
 ### Build
 
 ```

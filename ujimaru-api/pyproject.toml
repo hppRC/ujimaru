@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "text-generate-api"
+name = "ujimaru-api"
 version = "0.1.0"
 description = ""
 authors = ["hppRC <hpp.ricecake@gmail.com>"]

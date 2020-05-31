@@ -23,10 +23,10 @@ class Ujimaru(object):
         return Ujimaru.clean_text(self.model.make_sentence())
 
     def make_tweet(self):
-        sentence = self.model.make_sentence()
+        sentence = Ujimaru.clean_text(self.model.make_sentence())
         while not sentence or len(sentence) > 140:
-            sentence = self.model.make_sentence
-        return Ujimaru.clean_text(sentence)
+            sentence = Ujimaru.clean_text(self.model.make_sentence())
+        return sentence
 
 
 if __name__ == "__main__":

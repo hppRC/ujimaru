@@ -1,4 +1,4 @@
-# Ujimaru Text Generate
+# Ujimaru Reformer
 
 ## 主題
 

@@ -37,6 +37,18 @@ PyPI: [ujimaru-markov-model](https://pypi.org/project/ujimaru-markov-model/)
 This library generates text using a third-order Markov chain.
 
 
+### Usage
+
+```python
+ujimaru = Ujimaru()
+#
+print(ujimaru.make_sentence())
+# 京都行かない方が良さげかな...おらもポテチ食べたい...
+print(ujimaru.make_tweet()) # A sentence of 140 characters or less
+# 検索しても無限にredux-thunkが出てきて「なっっっっつ」ってなったけど0.1.0のtagを打ったらちゃんとブランチ分けます
+```
+
+
 ## Ujimaru Text Generate
 
 A text generation program by [reformer](https://github.com/google/trax/tree/master/trax/models/reformer).

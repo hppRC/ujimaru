@@ -74,7 +74,7 @@ pip install ujimaru-markov-model
 # On CLI
 ujimaru
 # へーー自然を撮るならいいってことか（それはそうなんだけど普通のRTになってるって！
-``
+```
 
 or
 

@@ -9,3 +9,4 @@ edition = "2018"
 kuon = "0.0.4"
 tokio = { version = "0.2.21", features = ["full"] }
 anyhow = "1.0.31"
+reqwest = "0.10.6"

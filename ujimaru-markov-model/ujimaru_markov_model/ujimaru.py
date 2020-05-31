@@ -2,7 +2,6 @@ import markovify
 import json
 import os
 
-
 class Ujimaru(object):
     def __init__(self):
         this_dir, this_filename = os.path.split(__file__)
@@ -20,12 +19,13 @@ class Ujimaru(object):
             return ""
 
     def make_sentence(self):
-        return Ujimaru.clean_text(self.model.make_sentence())
+        while not (sentence := Ujimaru.clean_text(self.model.make_sentence())):
+            continue
+        return sentence
 
     def make_tweet(self):
-        sentence = Ujimaru.clean_text(self.model.make_sentence())
-        while not sentence or len(sentence) > 140:
-            sentence = Ujimaru.clean_text(self.model.make_sentence())
+        while not (sentence := Ujimaru.clean_text(self.model.make_short_sentence(140))):
+            continue
         return sentence
 
 

@@ -9,7 +9,7 @@ python = "^3.8"
 pyknp = "^0.4.1"
 markovify = "^0.8.0"
 mecab-python3 = "^0.996.5"
-ujimaru-markov-model = "^0.2.1"
+ujimaru-markov-model = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

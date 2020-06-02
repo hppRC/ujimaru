@@ -32,7 +32,7 @@ api.tweet(&text).await?;
 
 ## Twitter Crawler
 
-Twitter crawler for collect tweets of uzimaru and other users.
+Twitter crawler to collect tweets of Uzimaru and other users.
 
 Written in Go. (Using [anaconda](https://github.com/ChimeraCoder/anaconda))
 

@@ -1,1 +1,0 @@
-abbr -a chore 'git add -A; git commit -m "🥺chore"; git push origin HEAD;'

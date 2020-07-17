@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
     let endpoint = &std::env::var("UJIMARU_API")?;
     let text = reqwest::get(endpoint).await?.text().await?;
 
-    api.tweet(&text).await?;
+    let _ = api.tweet(&text).await;
     println!("{}", text);
 
     Ok(())

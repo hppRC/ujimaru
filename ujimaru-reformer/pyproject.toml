@@ -10,7 +10,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.8"
 gin = "^0.1.6"
-jax = "^0.1.68"
+jax = "^0.2.0"
 trax = "v1.2.0"
 numpy = "^1.18.4"
 scipy = "^1.4.1"

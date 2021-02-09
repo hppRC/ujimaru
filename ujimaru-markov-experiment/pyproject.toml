@@ -7,7 +7,7 @@ authors = ["hppRC <hpp.ricecake@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 pyknp = "^0.4.1"
-markovify = "^0.8.0"
+markovify = "^0.9.0"
 mecab-python3 = "^0.996.5"
 ujimaru-markov-model = "^0.3.0"
 

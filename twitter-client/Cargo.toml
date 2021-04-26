@@ -8,5 +8,5 @@ edition = "2018"
 [dependencies]
 kuon = "0.0.4"
 tokio = { version = "0.2.21", features = ["full"] }
-anyhow = "1.0.31"
+anyhow = "1.0.40"
 reqwest = "0.10.6"
